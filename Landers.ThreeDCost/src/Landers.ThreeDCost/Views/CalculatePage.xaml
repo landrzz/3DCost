@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:macOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.macOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:windows="clr-namespace:Xamarin.Forms.PlatformConfiguration.WindowsSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms" 
+             xmlns:ioc="clr-namespace:Prism.Ioc;assembly=Prism.Forms"
+             xmlns:toolkit="clr-namespace:FormsToolkit;assembly=FormsToolkit"
+             ios:Page.UseSafeArea="true"
+             xmlns:sfpicker="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
+             xmlns:dataForm="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
+             xmlns:sfnumerictext="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
+             
+             Title="Print Cost Calculator" 
+             x:Class="Landers.ThreeDCost.Views.CalculatePage"
+             BackgroundColor="{StaticResource Arsenic}"
+             Padding="8">
+
+
+    <ContentPage.Content>
+        <StackLayout Spacing="10" Padding="5" > 
+            <!--<Label Text="Calculate the Cost of Your 3D Print" TextColor="{StaticResource WhiteSmoke}" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" />-->
+
+            <!--<Label Text="Calculate Cost of Print Using: " TextColor="{StaticResource WhiteSmoke}" FontAttributes="Bold" HorizontalOptions="Start" Margin="8, 8, 8, 2" />-->
+            <Frame HasShadow="true" BackgroundColor="{StaticResource Shamrock}" Padding="2" CornerRadius="2" HeightRequest="100" >
+            <sfpicker:SfPicker x:Name="MaterialPicker" PickerMode="Default" 
+                                     Margin="1" HeaderHeight="35" VerticalOptions="FillAndExpand"  SelectedIndex="0"
+                                    
+                                     HeaderText="Material"
+                                     HeaderFontAttribute="Bold"
+                                     HeaderFontSize="19"
+
+                                     BackgroundColor="{StaticResource Arsenic}"
+                                     BorderColor="{StaticResource Shamrock}"
+                                     HeaderTextColor="{StaticResource WhiteSmoke}" 
+                                     HeaderBackgroundColor="{StaticResource Lynch}"
+                                     SelectedItemTextColor="{StaticResource CaribbeanGreen}" 
+                                     SelectionBackgroundColor="{StaticResource GreyChateau}"
+                                     UnSelectedItemTextColor="{StaticResource WhiteSmoke}"
+                                     ItemsSource="{Binding MaterialOptions}"
+                                     SelectedItem="{Binding SelectedMaterial, Mode=TwoWay}"/>
+            </Frame>
+            <Grid HorizontalOptions="FillAndExpand" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Text="1.75mm" TextColor="{Binding btn175TextColor}" BorderWidth="3" BorderColor="{Binding btn175BorderColor}" BackgroundColor="{Binding btn175BackgroundColor}" Clicked="btn175_Clicked" x:Name="btn175" 
+                        HorizontalOptions="Fill"  />
+                <Button Text="3.00mm" TextColor="{Binding btn300TextColor}" BorderWidth="3" BorderColor="{Binding btn300BorderColor}" BackgroundColor="{Binding btn300BackgroundColor}" Clicked="btn300_Clicked" x:Name="btn300" 
+                        HorizontalOptions="Fill" Grid.Column="1" />
+
+            </Grid>
+            <Frame HasShadow="true" BackgroundColor="{StaticResource Shamrock}" Padding="2" CornerRadius="2" HeightRequest="155" >
+                <sfpicker:SfPicker   x:Name="picker"   PickerMode="Default" 
+                                     Margin="1" HeaderHeight="35" VerticalOptions="FillAndExpand" 
+                                     ShowColumnHeader="true"
+                                     ColumnHeaderFontSize="15"
+                                     HeaderText="Calculation Variable"
+                                     HeaderFontAttribute="Bold"
+                                     HeaderFontSize="19"
+                                     SelectedItem="{Binding Selected, Mode=TwoWay}"
+                                     SelectionChanged="picker_SelectionChanged"
+                                    
+                                     ColumnHeaderText="{Binding PickerHeader}"
+                                     ItemsSource="{Binding Area}"
+
+                                     BackgroundColor="{StaticResource Arsenic}"
+                                     BorderColor="{StaticResource Shamrock}"
+                                     HeaderTextColor="{StaticResource WhiteSmoke}" 
+                                     HeaderBackgroundColor="{StaticResource Lynch}"
+                                     ColumnHeaderBackgroundColor="{StaticResource Lynch}"
+                                     ColumnHeaderTextColor="{StaticResource WhiteSmoke}"                                    
+                                     SelectedItemTextColor="{StaticResource CaribbeanGreen}" 
+                                     SelectionBackgroundColor="{StaticResource GreyChateau}"
+                                     UnSelectedItemTextColor="{StaticResource WhiteSmoke}"
+                                       /> 
+            </Frame>
+
+            <Grid Padding="0">
+            <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                 
+                    </Grid.RowDefinitions>
+
+                    <Label Text="Weight on Spool" TextColor="{StaticResource WhiteSmoke}" FontAttributes="Bold" HorizontalTextAlignment="End" VerticalOptions="Center" />
+                    <toolkit:EntryLine Text="{Binding WeightOfSpoolAmount}" Keyboard="Numeric" Placeholder="2.0" BorderColor="{StaticResource Shamrock}" TextColor="{StaticResource CaribbeanGreen}" HorizontalTextAlignment="Center" 
+                                       BackgroundColor="{StaticResource Arsenic}" VerticalOptions="Center" PlaceholderColor="{StaticResource GreyChateau}" x:Name="spoolweightEntry" Grid.Column="1" >     
+                    </toolkit:EntryLine>
+                        <Label Text="Kg" TextColor="{StaticResource GreyChateau}" HorizontalOptions="Center" VerticalOptions="Center"  Grid.Column="2" />
+
+                    <Label Text="Cost of Spool" TextColor="{StaticResource WhiteSmoke}" FontAttributes="Bold" HorizontalTextAlignment="End" VerticalOptions="Center" Grid.Row="1" />
+                    <toolkit:EntryLine Text="{Binding CostOfSpoolAmount}" Keyboard="Numeric" Placeholder="18.99" BorderColor="{StaticResource Shamrock}" TextColor="{StaticResource CaribbeanGreen}" HorizontalTextAlignment="Center" 
+                                       BackgroundColor="{StaticResource Arsenic}" VerticalOptions="Center" PlaceholderColor="{StaticResource GreyChateau}" x:Name="spoolCostEntry" Grid.Row="1" Grid.Column="1" >     
+                    </toolkit:EntryLine>
+                        <Label Text="$" TextColor="{StaticResource GreyChateau}" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Grid.Column="2" />
+                
+                    <Label Text="{Binding CalcVariableType}" TextColor="{StaticResource WhiteSmoke}" FontAttributes="Bold" x:Name="CurrentUnitItemLabel" HorizontalTextAlignment="End" VerticalOptions="Center" Grid.Row="2"  />
+                    <toolkit:EntryLine Text="{Binding MeasurementVarAmount}" Keyboard="Numeric" TextColor="{StaticResource CaribbeanGreen}" x:Name="calcVarAmountEntry" Placeholder="{Binding CalcVariableUnitTypePlaceholder}" HorizontalTextAlignment="Center" BorderColor="{StaticResource Shamrock}" PlaceholderColor="{StaticResource GreyChateau}" 
+                                       BackgroundColor="{StaticResource Arsenic}" VerticalOptions="Center" Grid.Row="2" Grid.Column="1"  >     
+                    </toolkit:EntryLine>
+                    <Label Text="g" TextColor="{StaticResource GreyChateau}" HorizontalOptions="Center" VerticalOptions="Center"  Grid.Row="2" Grid.Column="2" x:Name="CalcVariableUnitLabel" />
+
+
+          </Grid>
+           
+
+<!--            <Grid Padding="0" HeightRequest="150" >
+            <dataForm:SfDataForm x:Name="dataForm" BackgroundColor="{StaticResource GreyChateau}"
+                                 AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" DataObject="{Binding InfoItem}" >
+               
+                    
+            </dataForm:SfDataForm>
+                
+
+            </Grid>-->
+
+            <Button Text="Calculate" TextColor="{StaticResource WhiteSmoke}" BorderColor="{StaticResource Shamrock}" BackgroundColor="{StaticResource Shamrock}" HorizontalOptions="FillAndExpand" Margin="10, 0, 10, 8" VerticalOptions="EndAndExpand" />
+        </StackLayout>
+       
+    </ContentPage.Content>
+</ContentPage>
